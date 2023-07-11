@@ -1,0 +1,42 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  padding-top: 20px;
+}
+.key-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.key-block {
+  background-color: #d3d6dab9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  width: 50px;
+  height: 65px;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.key-block.wide {
+  flex: 1.5;
+  font-size: 13px;
+  width: 70px;
+}
+
+.key-block:hover {
+  background-color: #d3d6da;
+}
+
+.back-space-icon {
+  width: 25px;
+  height: 25px;
+}
