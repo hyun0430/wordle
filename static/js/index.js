@@ -1,4 +1,4 @@
-const 정답 = "APPLE";
+// const 정답 = "APPLE";
 
 let attempts = 0;
 let index = 0;
@@ -24,19 +24,50 @@ function appStart() {
     displayGameover();
     clearInterval(timer);
   };
-  const handleEnterKey = () => {
+
+  const handleEnterKey = async () => {
     let 맞은_갯수 = 0;
+    // 서버에서 정답을 받아오는 코드
+    // fetch() 자바스크립트에서 서버로 요청을 보낼 때 사용하는 함수
+    // await 서버에 요청한 값이 올 떄까지 기다리는 코드
+    const 응답 = await fetch("/answer");
+    const 정답 = await 응답.json();
+
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
         `.board-block[data-index='${attempts}${i}']`
       );
+      const keyBlock = document.querySelectorAll(".key-block");
+
       const 입력한_글자 = block.innerText;
       const 정답_글자 = 정답[i];
       if (입력한_글자 === 정답_글자) {
         맞은_갯수 += 1;
         block.style.background = "#6AAA64";
-      } else if (정답.includes(입력한_글자)) block.style.background = "#C9B458";
-      else block.style.background = "#787C7E";
+        for (let i = 0; i < keyBlock.length; i++) {
+          if (keyBlock[i].innerText === 정답_글자) {
+            keyBlock[i].style.background = "#6AAA64";
+            console.log(keyBlock[i].style.background);
+          }
+        }
+      } else if (정답.includes(입력한_글자)) {
+        block.style.background = "#C9B458";
+        for (let i = 0; i < keyBlock.length; i++) {
+          if (
+            keyBlock[i].innerText === 입력한_글자 &&
+            keyBlock[i].style.background != "rgb(106, 170, 100)"
+          ) {
+            console.log(keyBlock[i].style.background);
+            keyBlock[i].style.background = "#C9B458";
+          }
+        }
+      } else {
+        block.style.background = "#787C7E";
+        for (let i = 0; i < keyBlock.length; i++) {
+          if (keyBlock[i].innerText === 입력한_글자)
+            keyBlock[i].style.background = "#787C7E";
+        }
+      }
       block.style.color = "white";
     }
 
